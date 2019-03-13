@@ -1,18 +1,66 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <GitMap msg="Welcome to Your Vue.js App"/>
+    <form>
+    <input id="gitname" name="gitname" v-model="githubName">
+    <button type="button" @click="fetch">Submit</button>
+    </form>
+    <p> {{ repdata }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GitMap from './components/GitMap.vue';
+import axios from "axios";
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    GitMap
+  },
+    
+  data() {
+      return {
+          isLoading: false,
+          repdata: [],
+          githubName: ""
+      };
+  },
+
+// In the created hook, you will be able to access reactive data and events are active.
+// Templates and Virtual DOM have not yet been mounted or rendered.
+  created() {
+      //this.fetch()
+      //this.getGitData();
+  },
+
+  methods: {
+
+        async fetch() {
+            const data = await this.getGitData();
+            console.log(data);
+            this.repdata = data;
+        },
+
+
+        getGitData () {
+            return axios.get(`https://api.github.com/users/${this.githubName}/repos`)
+            .then( response => {
+                //handle success
+                console.log(response);
+                return response.data
+            })
+            .catch( error =>  {
+                //handle error
+                console.log(error)
+            });
+        }
+
+
+
   }
+
 }
 </script>
 
