@@ -1,5 +1,6 @@
 <template>
   <div class="map">
+      <p> {{ repdata }}</p>
   </div>
 </template>
 
@@ -7,7 +8,21 @@
 export default {
   name: 'GitMap',
   props: {
-    msg: String
+    repdata: Array
+  },
+
+  methods: {
+      repositoryNames: function() {
+          console.log("Called.")
+          for(let data in this.repdata) {
+              console.log(`Data Name: ${data.name}`);
+          }
+      }
+  },
+
+
+  watch: {
+
   }
 }
 </script>

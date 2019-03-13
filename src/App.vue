@@ -1,12 +1,11 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <GitMap msg="Welcome to Your Vue.js App"/>
     <form>
     <input id="gitname" name="gitname" v-model="githubName">
     <button type="button" @click="fetch">Submit</button>
     </form>
-    <p> {{ repdata }}</p>
+    <GitMap :repdata=repdata />
   </div>
 </template>
 
@@ -36,26 +35,45 @@ export default {
   },
 
   methods: {
-
         async fetch() {
             const data = await this.getGitData();
-            console.log(data);
             this.repdata = data;
+            this.getRepoNames();
         },
 
 
-        getGitData () {
+        getGitData: function() {
             return axios.get(`https://api.github.com/users/${this.githubName}/repos`)
             .then( response => {
                 //handle success
-                console.log(response);
+                //console.log(response);
                 return response.data
             })
             .catch( error =>  {
                 //handle error
                 console.log(error)
             });
+        },
+
+
+        getRepoNames: function() {
+            let obj = this.repdata;
+            let repoCount = obj.length;
+
+            //get names of public repositories from github user
+            for(let i = 0; i < repoCount; i++) {
+                console.log(`Repo Names: ${obj[i].name}`);
+            }
+
+
+
+
+
+
+            console.log(obj.name);
         }
+
+
 
 
 
