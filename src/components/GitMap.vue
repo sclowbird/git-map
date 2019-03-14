@@ -2,12 +2,13 @@
     <div class="GitMap">
         <input name ="gitname" v-model="githubname">    
         <button type="button" v-on:click="gitData">Submit</button>
-        <p> {{ repdata }}</p>
+        <p> {{ commitdata }}</p>
     </div>
 </template>
 
 <script>
 import EventService from '../services/EventService.js'
+import Moment from '../helpers/moment/index.js'
 
 
 export default {
@@ -15,12 +16,12 @@ export default {
   data() {
       return {
           githubname: "",
-          repdata: []
+          repdata: [],
+          commitdata: []
       }
   },
 
   methods: {
-
     gitData() {
         EventService.getGitData(this.githubname)
             .then(response => {
@@ -31,8 +32,24 @@ export default {
                 console.log(`There was an error: ${error.response}`);
             })
             .then (() => {
-                console.log(this.getReponames());
+                //console.log(this.getReponames());
+                this.getCommitActivity();
+            });
+    },
+
+    getCommitActivity() {
+        EventService.getCommitActivity("sclowbird", "git-map") 
+            .then(response => {
+                //handle success
+                this.commitdata = response.data;
             })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`);
+            })
+            .then (() => {
+                Moment.commitData(this.commitdata);
+            });
+        
     },
 
     // extract all repository names from the entered github user
