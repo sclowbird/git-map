@@ -12,7 +12,9 @@ export default {
         let codingDays = this.getCodingDays(data);
 
         // match the coding days with an corresponding date
-        this.getDatesOfCodingDays(convertedTimestamps, codingDays)
+        let datesOfCodingDays = this.getDatesOfCodingDays(convertedTimestamps, codingDays);
+        
+        return datesOfCodingDays;
 
     },
 
@@ -78,12 +80,13 @@ export default {
         let obj = {};
         for (let i = 0; i < days.length; i++) {
             if (days[i] > 0) {
-                console.log(days[i]);
+                //console.log(days[i]);
                 obj[timestamp[i]] = days[i];      
             }
         }
+        //console.log(obj);
+        return obj;
 
-        console.log(obj);
 
     }
 

@@ -2,7 +2,7 @@
     <div class="GitMap">
         <input name ="gitname" v-model="githubname">    
         <button type="button" v-on:click="gitData">Submit</button>
-        <p> {{ commitdata }}</p>
+        <p> {{ codingDays }}</p>
     </div>
 </template>
 
@@ -17,12 +17,16 @@ export default {
       return {
           githubname: "",
           repdata: [],
-          commitdata: []
+          commitdata: [],
+          codingDays : []
       }
   },
 
   methods: {
     gitData() {
+        //reset data
+        this.codingDays = [];
+
         EventService.getGitData(this.githubname)
             .then(response => {
                 //handle success
@@ -32,13 +36,19 @@ export default {
                 console.log(`There was an error: ${error.response}`);
             })
             .then (() => {
-                //console.log(this.getReponames());
+                //console.log(this.getReponames()[0]);
                 this.getCommitActivity();
             });
     },
-
+    
     getCommitActivity() {
-        EventService.getCommitActivity("sclowbird", "challenge_journey") 
+        let repositoryNames = this.getReponames()
+        console.log(this.getReponames());
+        let obj = {};
+
+        for(let i = 0; i < repositoryNames.length; i++) {
+            //console.log(repositoryNames[i]);
+            EventService.getCommitActivity(this.githubname, repositoryNames[i]) 
             .then(response => {
                 //handle success
                 this.commitdata = response.data;
@@ -46,9 +56,13 @@ export default {
             .catch(error => {
                 console.log(`There was an error: ${error.response}`);
             })
-            .then (() => {
-                Moment.commitData(this.commitdata);
+            .then (() => {       
+                 
+                 this.codingDays.push(Moment.commitData(this.commitdata));
             });
+        }
+
+
         
     },
 
