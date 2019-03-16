@@ -38,7 +38,7 @@ export default {
     },
 
     getCommitActivity() {
-        EventService.getCommitActivity("sclowbird", "git-map") 
+        EventService.getCommitActivity("sclowbird", "challenge_journey") 
             .then(response => {
                 //handle success
                 this.commitdata = response.data;
