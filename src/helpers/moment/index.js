@@ -13,7 +13,7 @@ export default {
 
         // match the coding days with an corresponding date
         let datesOfCodingDays = this.getDatesOfCodingDays(convertedTimestamps, codingDays);
-        
+
         return datesOfCodingDays;
 
     },
@@ -50,7 +50,7 @@ export default {
         //console.log(`Moment format: ${moment().format("M")}`)
         for(let i=0; i < timestamps.length; i++) {
             //console.log(moment.unix(timestamps[i]).toDate());         
-            convertedTimestamps.push(moment.unix(timestamps[i]).toDate());
+            convertedTimestamps.push(moment.unix(timestamps[i]).format("D, M"));
         }
 
         //console.log(`Day 360: ${convertedTimestamps[360]}`)
