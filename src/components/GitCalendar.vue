@@ -46,26 +46,36 @@ export default {
         // Includes all dates on which has been programmed (as date object).
         let codingMonth = [];   
         let obj = {};
-
         for (let i = 0; i < codingDates.length; i++) {
             let dates = moment(codingDates[i]);
             codingMonth.push(dates.daysInMonth());          
             obj[dates.format("MMMM")] = codingMonth[i];
         }
+        
+        this.codingMonths.push(obj)
+        this.getDayIterator();
+        //console.log(obj)
+      },
 
+      getDayIterator() {
+        let obj = Object.values(this.codingMonths[0]);
+        let days = [];
+        console.log(obj);
+        for(let i = 0; i < obj.length; i++) {
+            let arr = [];
+            for(let j = 1; j < obj[i] + 1; j++) {
+                arr.push(j);
+                
+            }
+            days.push(arr);
+        }
 
-        console.log(obj)
-
-
-
-
-
+        console.log(days);
 
       }
 
+  },
 
-
-  }
 
 
 }
