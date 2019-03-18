@@ -3,17 +3,21 @@
         <input name ="gitname" v-model="githubname">    
         <input name ="gitname" v-model="repoName">   
         <button type="button" v-on:click="getCommitActivity">Submit</button>
-        <p> {{ codingDays }}</p>
+        <GitCalendar :codingDays=codingDays></GitCalendar>
     </div>
 </template>
 
 <script>
 import EventService from '../services/EventService.js'
 import Moment from '../helpers/moment/index.js'
-
+import GitCalendar from './GitCalendar.vue'
 
 export default {
   name: "GitMap",
+  components: {
+      GitCalendar
+  },
+
   data() {
       return {
           githubname: "",
@@ -24,11 +28,9 @@ export default {
   },
 
   methods: {
-    
     getCommitActivity() {
             //reset data
             this.codingDays = [];
-            //console.log(repositoryNames[i]);
             EventService.getCommitActivity(this.githubname, this.repoName) 
             .then(response => {
                 //handle success
@@ -37,12 +39,9 @@ export default {
             .catch(error => {
                 console.log(`There was an error: ${error.response}`);
             })
-            .then (() => {       
-                 
+            .then (() => {                   
                  this.codingDays.push(Moment.commitData(this.commitdata));
             });
-        
-        
     }
 
 

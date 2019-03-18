@@ -9,10 +9,10 @@
 import GitMap from './components/GitMap.vue';
 
 export default {
-  name: 'app',
-  components: {
-    GitMap
-  }
+    name: 'app',
+    components: {
+        GitMap
+    }
 }
 
 </script>

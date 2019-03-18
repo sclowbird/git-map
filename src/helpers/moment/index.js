@@ -50,7 +50,7 @@ export default {
         //console.log(`Moment format: ${moment().format("M")}`)
         for(let i=0; i < timestamps.length; i++) {
             //console.log(moment.unix(timestamps[i]).toDate());         
-            convertedTimestamps.push(moment.unix(timestamps[i]).format("D, M"));
+            convertedTimestamps.push(moment.unix(timestamps[i]).format());
         }
 
         //console.log(`Day 360: ${convertedTimestamps[360]}`)
