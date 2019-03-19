@@ -4,9 +4,11 @@
         <p> These are the {{ codingDays }}</p>
         <p> Coding months: {{ renderMonths }}</p>
 
-        <li v-for="(item,index) in renderMonths" :key="index">
-            {{ item }}
-        </li>
+        <div v-for="(item,index) in renderMonths" :key="index">
+            <div v-for="(days, dayindex) in renderMonths[index]" :key="dayindex" v-bind:id="`${monthList[index]}-${days}`"> 
+                {{ days }}
+            </div>   
+        </div>
 
 
     </div>
@@ -21,7 +23,8 @@ export default {
   data() {
       return {
           codingMonths: [],
-          renderMonths: []
+          renderMonths: [],
+          monthList: []
       }
   },
 
@@ -46,6 +49,20 @@ export default {
           }
 
           this.getCodingMonths(codingDates);
+          this.getCodingDays(codingDates);
+
+      },
+
+      getCodingDays(codingDates) {
+        let codingDays = [];
+        for (let i = 0; i < codingDates.length; i++) {
+            let arr = [];
+            let dates = moment(codingDates[i]);
+            codingDays.push(dates.format("MMMM-D"));
+            
+        }
+
+        console.log(`Coding Days: ${codingDays}`);
 
       },
 
@@ -66,8 +83,9 @@ export default {
 
       getDayIterator() {
         let obj = Object.values(this.codingMonths[0]);
+        this.monthList = Object.keys(this.codingMonths[0]);
         let days = [];
-        console.log(obj);
+        console.log(this.monthList[0]);
         for(let i = 0; i < obj.length; i++) {
             let arr = [];
             for(let j = 1; j < obj[i] + 1; j++) {
