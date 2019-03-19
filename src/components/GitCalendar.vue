@@ -2,7 +2,13 @@
     <div class="GitCalendar">
         <h1> Git Calendar</h1>
         <p> These are the {{ codingDays }}</p>
-        <p> Coding months: {{ codingMonths }}</p>
+        <p> Coding months: {{ renderMonths }}</p>
+
+        <li v-for="(item,index) in renderMonths" :key="index">
+            {{ item }}
+        </li>
+
+
     </div>
 </template>
 
@@ -14,7 +20,8 @@ export default {
   name: "GitCalendar",
   data() {
       return {
-          codingMonths: []
+          codingMonths: [],
+          renderMonths: []
       }
   },
 
@@ -70,7 +77,7 @@ export default {
             days.push(arr);
         }
 
-        console.log(days);
+        this.renderMonths = days;
 
       }
 
