@@ -2,7 +2,6 @@
     <div class="GitCalendar">
         <h1> Git Calendar</h1>
         <p> These are the {{ codingDays }}</p>
-        <p> Coding months: {{ renderMonths }}</p>
 
         <div v-for="(item,index) in renderMonths" :key="index">
             <div v-for="(days, dayindex) in renderMonths[index]" :key="dayindex" v-bind:id="`${monthList[index]}-${days}`"> 
@@ -24,7 +23,8 @@ export default {
       return {
           codingMonths: [],
           renderMonths: [],
-          monthList: []
+          monthList: [],
+          codingDatesFormatted: []
       }
   },
 
@@ -34,7 +34,7 @@ export default {
 
   beforeUpdate: function() {
       //this.$nextTick(function() {
-          console.log(`Next Tick accessed.`);
+          //console.log(`Next Tick accessed.`);
           this.codingDates();
       //})
   },
@@ -42,27 +42,41 @@ export default {
   methods: {
       codingDates() {
           this.codingMonths = [];
+          this.renderMonths = [];
+          this.monthList = [];
+          this.codingDatesFormatted = [];
+
           let codingDates = [];
           //console.log(moment().daysInMonth("11, Sep, 2019", "D, MMM, YYYY"));
           for (let dates in this.codingDays[0]) {
               codingDates.push(dates);
+              this.codingDatesFormatted.push(dates);
           }
 
           this.getCodingMonths(codingDates);
-          this.getCodingDays(codingDates);
+          
 
       },
 
-      getCodingDays(codingDates) {
+      getCodingDays() {
         let codingDays = [];
-        for (let i = 0; i < codingDates.length; i++) {
+        for (let i = 0; i < this.codingDatesFormatted.length; i++) {
             let arr = [];
-            let dates = moment(codingDates[i]);
+            let dates = moment(this.codingDatesFormatted[i]);
             codingDays.push(dates.format("MMMM-D"));
-            
         }
 
-        console.log(`Coding Days: ${codingDays}`);
+        //TODO: Reassign ids to elements with "codingDays" id
+        // Example: document.getElementById("demo").id = "newid";
+        
+        this.$nextTick(function() {
+            for (let j = 0; j < codingDays.length; j++) {
+                //console.log(`Coding Days: ${codingDays[j]}`);
+                document.getElementById(codingDays[j]).id = "codingDay";
+            }
+        });
+
+
 
       },
 
@@ -81,11 +95,13 @@ export default {
         //console.log(obj)
       },
 
+
+
       getDayIterator() {
         let obj = Object.values(this.codingMonths[0]);
         this.monthList = Object.keys(this.codingMonths[0]);
         let days = [];
-        console.log(this.monthList[0]);
+        //console.log(this.monthList[0]);
         for(let i = 0; i < obj.length; i++) {
             let arr = [];
             for(let j = 1; j < obj[i] + 1; j++) {
@@ -97,6 +113,8 @@ export default {
 
         this.renderMonths = days;
 
+        this.getCodingDays();
+
       }
 
   },
@@ -105,3 +123,15 @@ export default {
 
 }
 </script>
+
+
+<!-- Removed scope attribute because when you use "scoped" 
+on style tags in .vue files it adds an attribute specifier
+to each of your CSS selectors therefore I wouldn't <style lang="less">
+the coding days.
+</style> -->
+<style>
+    #codingDay {
+        background-color: aqua;
+    }
+</style>
