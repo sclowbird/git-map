@@ -7,6 +7,7 @@
         <button type="button" v-on:click="getCommitActivity">Submit</button>
         <h1> {{ githubname }} </h1>
         <h2> {{ repoName }}</h2>
+        <h4> {{ errorMess }}</h4>
         <GitCalendar :codingDays=codingDays></GitCalendar>
     </div>
 </template>
@@ -27,7 +28,8 @@ export default {
           githubname: "",
           repoName: "",
           commitdata: [],
-          codingDays : []
+          codingDays : [],
+          errorMess : ""
       }
   },
 
@@ -38,13 +40,18 @@ export default {
             EventService.getCommitActivity(this.githubname, this.repoName) 
             .then(response => {
                 //handle success
-                this.commitdata = response.data;
+                console.log(response.status);
+                if(response.status === 200) {
+                    this.commitdata = response.data;
+                    this.codingDays.push(Moment.commitData(this.commitdata));
+                } else {
+                    this.getCommitActivity();
+                }
             })
             .catch(error => {
-                console.log(`There was an error: ${error.response}`);
-            })
-            .then (() => {                   
-                 this.codingDays.push(Moment.commitData(this.commitdata));
+                if (error.response.status === 404) {
+                    this.errorMess = "This Github name or repository doesn't exist. Please try a different combination."; 
+                }
             });
     }
   }
@@ -58,6 +65,11 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+
+h4 {
+    color: red;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
