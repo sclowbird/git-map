@@ -38,7 +38,6 @@ export default {
         timeStampsEveryDay.push(timestamp[0]);
 
         for (let i = 0; i < totalDays; i++) {
-            //console.log(timeStampsEveryDay[0]);
             timeStampsEveryDay.push(timeStampsEveryDay[i] + oneDayInSeconds);
         }
         return timeStampsEveryDay;
@@ -47,15 +46,11 @@ export default {
     // Gets all dates from an array of timestamps
     convertUnixTimestamps(timestamps) {
         let convertedTimestamps = [];
-        //console.log(`Moment format: ${moment().format("M")}`)
-        for(let i=0; i < timestamps.length; i++) {
-            //console.log(moment.unix(timestamps[i]).toDate());         
+        for(let i=0; i < timestamps.length; i++) {       
             convertedTimestamps.push(moment.unix(timestamps[i]).format());
         }
 
-        //console.log(`Day 360: ${convertedTimestamps[360]}`)
         return convertedTimestamps;
-
     },
 
     // Returns all days from commit activity 
@@ -76,15 +71,12 @@ export default {
 
 
     getDatesOfCodingDays(timestamp, days) {
-        //let dayTimestamps = [];
         let obj = {};
         for (let i = 0; i < days.length; i++) {
             if (days[i] > 0) {
-                //console.log(days[i]);
                 obj[timestamp[i]] = days[i];      
             }
         }
-        //console.log(obj);
         return obj;
 
 

@@ -43,8 +43,6 @@ export default {
                  this.codingDays.push(Moment.commitData(this.commitdata));
             });
     }
-
-
   }
 }
 </script>
