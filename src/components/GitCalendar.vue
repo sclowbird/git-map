@@ -1,13 +1,13 @@
 <template>
     <div class="GitCalendar">
-        <h1> Git Calendar</h1>
-
-        <div v-for="(item,index) in renderMonths" :key="index">
-            <div class="month-display"> {{ monthList[index] }} </div>
-                <div v-for="(days, dayindex) in renderMonths[index]" :key="dayindex" v-bind:id="`${monthList[index]}-${days}`" class="git-days"> 
-                    {{ days }}
-                </div>   
-        </div>
+            <div v-for="(item,index) in renderMonths" :key="index">
+                <div class="month-display"> {{ monthList[index] }} </div>
+                    <div class="container">
+                        <div v-for="(days, dayindex) in renderMonths[index]" :key="dayindex" v-bind:id="`${monthList[index]}-${days}`" class="git-days"> 
+                            {{ days }}
+                        </div>   
+                    </div>
+            </div>
 
         <p id="update-dom"> Coding Days {{ codingDays }}</p>
     </div>
@@ -124,8 +124,19 @@ to each of your CSS selectors therefore I wouldn't <style lang="less">
 the coding days.
 </style> -->
 <style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: yellow;
+
+    }
+
+    .git-days {
+        width: 13%;
+    }
+
     #coding-day {
-        background-color: aqua;
+        color: aqua;
     }
 
     #update-dom {

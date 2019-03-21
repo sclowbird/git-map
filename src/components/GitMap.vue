@@ -1,8 +1,12 @@
 <template>
     <div class="GitMap">
-        <input name ="gitname" v-model="githubname">    
-        <input name ="gitname" v-model="repoName">   
+        <label for="githubName">Enter a GitHub name</label> <br>
+        <input name ="githubName" v-model="githubname">    <br>
+        <label for="repositoryName">Enter a corresponding repository name </label> <br>
+        <input name ="repositoryName" v-model="repoName">   
         <button type="button" v-on:click="getCommitActivity">Submit</button>
+        <h1> {{ githubname }} </h1>
+        <h2> {{ repoName }}</h2>
         <GitCalendar :codingDays=codingDays></GitCalendar>
     </div>
 </template>
