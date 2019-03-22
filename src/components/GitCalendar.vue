@@ -1,7 +1,7 @@
 <template>
     <div class="GitCalendar">
             <div v-for="(item,index) in renderMonths" :key="index">
-                <div class="month-display"> {{ monthList[index] }} </div>
+                <div class="month-display"> Commit activity in {{ monthList[index] }} </div>
                     <div class="container">
                         <div v-for="(days, dayindex) in renderMonths[index]" :key="dayindex" v-bind:id="`${monthList[index]}-${days}`" class="git-days"> 
                             {{ days }}
@@ -127,16 +127,22 @@ the coding days.
     .container {
         display: flex;
         flex-wrap: wrap;
-        background-color: yellow;
+        margin-bottom: 40px;
+    }
 
+    .month-display {
+        margin-bottom: 20px;
     }
 
     .git-days {
+        margin: 4px 4px 4px 4px;
         width: 13%;
+        border-style: solid;
+        border-width: 1px;
     }
 
     #coding-day {
-        color: aqua;
+        background-color: aqua;
     }
 
     #update-dom {

@@ -1,10 +1,10 @@
 <template>
     <div class="GitMap">
-        <label for="githubName">Enter a GitHub name</label> <br>
-        <input name ="githubName" v-model="githubname">    <br>
-        <label for="repositoryName">Enter a corresponding repository name </label> <br>
-        <input name ="repositoryName" v-model="repoName">   
-        <button type="button" v-on:click="getCommitActivity">Submit</button>
+        <label class="input-style" for="githubName">Enter a GitHub name</label> <br>
+        <input class="input-style" name ="githubName" v-model="githubname">    <br>
+        <label class="input-style" for="repositoryName">Enter a corresponding repository name </label> <br>
+        <input class="input-style" name ="repositoryName" v-model="repoName">  <br> 
+        <button class="input-style" type="button" v-on:click="getCommitActivity">Submit</button>
         <h1> {{ githubname }} </h1>
         <h2> {{ repoName }}</h2>
         <h4> {{ errorMess }}</h4>
@@ -40,7 +40,6 @@ export default {
             EventService.getCommitActivity(this.githubname, this.repoName) 
             .then(response => {
                 //handle success
-                console.log(response.status);
                 if(response.status === 200) {
                     this.commitdata = response.data;
                     this.codingDays.push(Moment.commitData(this.commitdata));
@@ -62,6 +61,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    margin-top: 40px;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    margin-bottom: 40px;
+}
+
 h3 {
   margin: 40px 0 0;
 }
@@ -81,4 +92,10 @@ li {
 a {
   color: #42b983;
 }
+
+.input-style {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
 </style>
