@@ -1,13 +1,18 @@
 <template>
     <div class="GitMap">
-        <label class="input-style" for="githubName">Enter a GitHub name</label> <br>
+        <h1> Git-Map </h1>
+        <h2> visualize your commit activity !</h2>
+
+        <label class="input-label" for="githubName">Enter a GitHub name</label> <br>
         <input class="input-style" name ="githubName" v-model="githubname">    <br>
-        <label class="input-style" for="repositoryName">Enter a corresponding repository name </label> <br>
-        <input class="input-style" name ="repositoryName" v-model="repoName">  <br> 
-        <button class="input-style" type="button" v-on:click="getCommitActivity">Submit</button>
-        <h1> {{ githubname }} </h1>
-        <h2> {{ repoName }}</h2>
-        <h4> {{ errorMess }}</h4>
+
+        <label class="input-label" for="repositoryName">Enter a corresponding repository name </label> <br>
+        <input class="input-style" name ="repositoryName" v-on:keyup.13="getCommitActivity" v-model="repoName">  <br> 
+        
+        <button class="waves-effect waves-light btn" type="button" v-on:click="getCommitActivity">Submit</button>
+        <!-- <h1> {{ githubname }} </h1>
+        <h2> {{ repoName }}</h2> -->
+        <h4 v-if="errorBool"> {{ errorMess }}</h4>
         <GitCalendar :codingDays=codingDays></GitCalendar>
     </div>
 </template>
@@ -29,7 +34,8 @@ export default {
           repoName: "",
           commitdata: [],
           codingDays : [],
-          errorMess : ""
+          errorMess : "",
+          errorBool : false
       }
   },
 
@@ -41,6 +47,7 @@ export default {
             .then(response => {
                 //handle success
                 if(response.status === 200) {
+                    this.errorBool = false;
                     this.commitdata = response.data;
                     this.codingDays.push(Moment.commitData(this.commitdata));
                 } else {
@@ -49,6 +56,8 @@ export default {
             })
             .catch(error => {
                 if (error.response.status === 404) {
+                    this.errorBool = true;
+                    
                     this.errorMess = "This Github name or repository doesn't exist. Please try a different combination."; 
                 }
             });
@@ -78,7 +87,8 @@ h3 {
 }
 
 h4 {
-    color: red;
+    color: #427bb9;
+    font-size: 40px;
 }
 
 ul {
@@ -93,9 +103,29 @@ a {
   color: #42b983;
 }
 
+button {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    width: 30%;
+}
+
 .input-style {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 35px;
+   /* color: #070707; */
+    color: #000000; 
+    border-color: #000000;
+    width: 40%;
+    text-align: center;
+}
+
+.input-label {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif; 
+    font-size: 25px;  
+    color: #000000; 
+  /*  color: #379689; */
+    margin-top: 20px; 
+    margin-bottom: 5px;
 }
 
 </style>

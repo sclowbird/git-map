@@ -131,6 +131,7 @@ the coding days.
     }
 
     .month-display {
+        margin-top: 30px;
         margin-bottom: 20px;
     }
 
@@ -139,10 +140,11 @@ the coding days.
         width: 13%;
         border-style: solid;
         border-width: 1px;
+
     }
 
     #coding-day {
-        background-color: aqua;
+        background-color: #c38d9e;
     }
 
     #update-dom {

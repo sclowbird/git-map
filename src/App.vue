@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style>
+@import './css/materialize.css';
+
 #app {
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   font-family: 'Dancing Script', cursive;
@@ -27,5 +29,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  margin-bottom: 80px;
+  background-color: #7CC2AF;
+}
+
+html {
+    background-color: #7CC2AF;
 }
 </style>
